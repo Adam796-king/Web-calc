@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Kalkulator</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --bakgrunn: linear-gradient(160deg, #f5efe4 0%, #dce8db 100%);
+            --kort: rgba(255, 252, 247, 0.9);
+            --kant: #b9c8b3;
+            --tekst: #1f2a1f;
+            --aksent: #2f6c4f;
+            --aksent-mork: #234f3a;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Georgia, "Times New Roman", serif;
+            background: var(--bakgrunn);
+            color: var(--tekst);
+        }
+
+        main {
+            width: min(900px, calc(100% - 2rem));
+            margin: 0 auto;
+            padding: 3rem 0;
+        }
+
+        h1 {
+            margin-bottom: 0.5rem;
+        }
+
+        .intro {
+            margin-bottom: 2rem;
+            max-width: 60ch;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1rem;
+        }
+
+        .kort {
+            padding: 1.25rem;
+            border: 1px solid var(--kant);
+            border-radius: 18px;
+            background: var(--kort);
+            backdrop-filter: blur(6px);
+            box-shadow: 0 10px 30px rgba(31, 42, 31, 0.08);
+        }
+
+        form {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        input,
+        button {
+            font: inherit;
+            padding: 0.7rem 0.9rem;
+            border-radius: 12px;
+        }
+
+        input {
+            flex: 1 1 120px;
+            border: 1px solid var(--kant);
+            background: #fffdf9;
+        }
+
+        button {
+            border: none;
+            background: var(--aksent);
+            color: white;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: var(--aksent-mork);
+        }
+
+        .resultat {
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+<main>
+    <h1>Web Kalkulator</h1>
+    <p class="intro">Regn ut fakultet, FizzBuzz og Fibonacci direkte i nettleseren.</p>
+
+    <div class="grid">
+        <section id="fakultet" class="kort">
+            <h2>Fakultet</h2>
+            <form>
+                <input name="tall" placeholder="Skriv inn et tall" type="number">
+                <button>Regn ut fakultet</button>
+            </form>
+            <p>Resultatet er: <span class="resultat"></span></p>
+        </section>
+
+        <section id="fizzbuzz" class="kort">
+            <h2>FizzBuzz</h2>
+            <form>
+                <input name="tall" placeholder="Skriv inn et tall" type="number">
+                <button>Kjør FizzBuzz</button>
+            </form>
+            <p>Resultatet er: <span class="resultat"></span></p>
+        </section>
+
+        <section id="fibonacci" class="kort">
+            <h2>Fibonacci</h2>
+            <form>
+                <input name="tall" placeholder="Skriv inn et tall" type="number" min="1">
+                <button>Regn ut fibonacci</button>
+            </form>
+            <p>Resultatet er: <span class="resultat"></span></p>
+        </section>
+    </div>
+</main>
+
+<script type="module">
+import { fakultet } from './fakultet.js';
+import { fizzBuzz } from '../Fizzbuzz/fizzbuzz.js';
+import { fibonacci } from './fibonacci.js';
+
+function kobleSeksjon(selector, beregning) {
+    const seksjon = document.querySelector(selector);
+    const form = seksjon.querySelector('form');
+    const input = seksjon.querySelector('input');
+    const output = seksjon.querySelector('.resultat');
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        output.textContent = beregning(Number.parseInt(input.value, 10));
+    });
+}
+
+kobleSeksjon('#fakultet', fakultet);
+kobleSeksjon('#fizzbuzz', fizzBuzz);
+kobleSeksjon('#fibonacci', fibonacci);
+</script>
+</body>
+</html>

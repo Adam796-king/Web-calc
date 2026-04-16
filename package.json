@@ -1,0 +1,10 @@
+{
+  "name": "web-calc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "fakultet.js",
+  "type": "module",
+  "scripts": {
+    "test": "node --test --experimental-test-isolation=none"
+  }
+}
